@@ -11,16 +11,16 @@ import (
 	"github.com/quii/go-specs-greet/specifications"
 )
 
-func TestGreeterServer(t *testing.T) {
+func TestHttpGreeterServer(t *testing.T) {
 	var (
 		port           = "8080"
 		dockerFilePath = "./cmd/httpserver/Dockerfile"
 		baseURL        = fmt.Sprintf("http://localhost:%s", port)
 		driver         = httpserver.Driver{BaseURL: baseURL, Client: &http.Client{
-			Timeout: 1 * time.Second,
+			Timeout: 5 * time.Second,
 		}}
 	)
 
-	adapters.StartDockerServer(t, port, dockerFilePath)
+	adapters.StartDockerServer(t, port, "httpserver")
 	specifications.GreetSpecification(t, driver)
 }
