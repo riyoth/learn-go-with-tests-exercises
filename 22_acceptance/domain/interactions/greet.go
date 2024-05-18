@@ -3,5 +3,9 @@ package interactions
 import "fmt"
 
 func Greet(name string) string {
-	return fmt.Sprintf("Hello, %s", name)
+	response := "World"
+	if name != "" {
+		response = name
+	}
+	return fmt.Sprintf("Hello, %s", response)
 }

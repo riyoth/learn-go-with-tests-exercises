@@ -10,3 +10,11 @@ import (
 func TestGreet(t *testing.T) {
 	specifications.GreetSpecification(t, specifications.GreetAdapter(interactions.Greet))
 }
+func TestGreetEmptyString(t *testing.T) {
+	got := interactions.Greet("")
+	want := "Hello, World"
+
+	if got != want {
+		t.Fatalf("got %s, want %s", got, want)
+	}
+}
