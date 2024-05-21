@@ -29,7 +29,7 @@ func TestRecordingWindsAndRetrievingThem(t *testing.T) {
 
 		got := getLeagueFromResponse(t, response.Body)
 		want := []Player{
-			{"Pepper", 1},
+			{"Pepper", 3},
 		}
 
 		assertLeague(t, got, want)
