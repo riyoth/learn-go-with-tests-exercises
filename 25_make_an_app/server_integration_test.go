@@ -7,8 +7,8 @@ import (
 )
 
 func TestRecordingWindsAndRetrievingThem(t *testing.T) {
-	store := inMemoryPlayerStore{}
-	server := PlayerServer{&store}
+	store := NewInMemoryPlayerStore()
+	server := PlayerServer{store}
 	player := "Pepper"
 
 	server.ServeHTTP(httptest.NewRecorder(), newPostWinRequest(player))
