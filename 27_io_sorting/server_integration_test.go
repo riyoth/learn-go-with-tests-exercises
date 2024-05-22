@@ -7,10 +7,13 @@ import (
 )
 
 func TestRecordingWindsAndRetrievingThem(t *testing.T) {
-	database, cleanDatabase := createTempFile(t, "")
+	//database, cleanDatabase := createTempFile(t, "")
+	//defer cleanDatabase()
+	database, cleanDatabase := createTempFile(t, `[
+		]`)
 	defer cleanDatabase()
 
-	store := NewFileSystemPlayerStore(database)
+	store, _ := NewFileSystemPlayerStore(database)
 	server := NewPlayerServer(store)
 	player := "Pepper"
 
