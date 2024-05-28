@@ -27,8 +27,12 @@ func NewCLI(in io.Reader, out io.Writer, game Game) *CLI {
 func (cli *CLI) PlayPoker() {
 	fmt.Fprintf(cli.out, PlayerPrompt)
 	numberOfPlayersInput := cli.readLine()
-	numberOfPlayers, _ := strconv.Atoi(strings.Trim(numberOfPlayersInput, "\n"))
+	numberOfPlayers, err := strconv.Atoi(strings.Trim(numberOfPlayersInput, "\n"))
 
+	if err != nil {
+		fmt.Fprint(cli.out, "you're so silly")
+		return
+	}
 	cli.game.Start(numberOfPlayers)
 
 	winnerInput := cli.readLine()
