@@ -14,7 +14,7 @@ func TestRecordingWindsAndRetrievingThem(t *testing.T) {
 	defer cleanDatabase()
 
 	store, _ := NewFileSystemPlayerStore(database)
-	server, _ := NewPlayerServer(store)
+	server, _ := NewPlayerServer(store, dummyGame)
 	player := "Pepper"
 
 	server.ServeHTTP(httptest.NewRecorder(), newPostWinRequest(player))

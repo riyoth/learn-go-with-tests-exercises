@@ -1,4 +1,4 @@
-module github.com/riyoth/learn-go-with-tests-exercises/28_command_line
+module github.com/riyoth/learn-go-with-tests-exercises/30_websocket
 
 go 1.22.3
 

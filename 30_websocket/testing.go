@@ -65,3 +65,31 @@ type SpyBlindAlerter struct {
 func (s *SpyBlindAlerter) ScheduleAlertAt(duration time.Duration, amount int, to io.Writer) {
 	s.Alerts = append(s.Alerts, ScheduledAlert{duration, amount})
 }
+
+type GameSpy struct {
+	StartedWith  int
+	StartCalled  bool
+	FinishedWith string
+}
+
+func (p *GameSpy) Start(numberOfPlayers int, alertsDestination io.Writer) {
+	p.StartCalled = true
+	p.StartedWith = numberOfPlayers
+}
+
+func (p *GameSpy) Finish(winner string) {
+	p.FinishedWith = winner
+}
+
+func assertGameStartedWith(t testing.TB, game *GameSpy, want int) {
+	t.Helper()
+	if game.StartedWith != want {
+		t.Errorf("wanted Start called with %d but got %d", want, game.StartedWith)
+	}
+}
+func assertGameFinishWith(t testing.TB, game *GameSpy, want string) {
+	t.Helper()
+	if game.FinishedWith != want {
+		t.Errorf("wanted Finish called with %v but got %v", want, game.FinishedWith)
+	}
+}
