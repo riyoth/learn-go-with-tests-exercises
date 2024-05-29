@@ -87,13 +87,29 @@ func (p *GameSpy) Finish(winner string) {
 
 func assertGameStartedWith(t testing.TB, game *GameSpy, want int) {
 	t.Helper()
-	if game.StartedWith != want {
-		t.Errorf("wanted Start called with %d but got %d", want, game.StartedWith)
+	passed := retryUntil(500*time.Millisecond, func() bool {
+		return game.StartedWith == want
+	})
+	if !passed {
+		t.Errorf("wanted Started called with %v but got %v", want, game.StartedWith)
 	}
 }
 func assertGameFinishWith(t testing.TB, game *GameSpy, want string) {
 	t.Helper()
-	if game.FinishedWith != want {
+	passed := retryUntil(500*time.Millisecond, func() bool {
+		return game.FinishedWith == want
+	})
+	if !passed {
 		t.Errorf("wanted Finish called with %v but got %v", want, game.FinishedWith)
 	}
+}
+
+func retryUntil(d time.Duration, f func() bool) bool {
+	deadline := time.Now().Add(d)
+	for time.Now().Before(deadline) {
+		if f() {
+			return true
+		}
+	}
+	return false
 }
