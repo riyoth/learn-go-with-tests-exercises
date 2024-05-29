@@ -3,13 +3,10 @@ package poker
 import (
 	"encoding/json"
 	"fmt"
-	"io"
 	"net/http"
 	"strconv"
 	"strings"
 	"text/template"
-
-	"github.com/gorilla/websocket"
 )
 
 const jsonContentType = "application/json"
@@ -62,17 +59,13 @@ func (p *PlayerServer) playGame(w http.ResponseWriter, r *http.Request) {
 }
 
 func (p *PlayerServer) webSocket(w http.ResponseWriter, r *http.Request) {
-	upgrader := websocket.Upgrader{
-		ReadBufferSize:  1024,
-		WriteBufferSize: 1024,
-	}
+	ws := newPlayerServerWS(w, r)
 
-	conn, _ := upgrader.Upgrade(w, r, nil)
-	_, numberOfPlayersMsg, _ := conn.ReadMessage()
+	numberOfPlayersMsg := ws.WaitForMsg()
 	numberOfPlayers, _ := strconv.Atoi(string(numberOfPlayersMsg))
-	p.game.Start(numberOfPlayers, io.Discard)
+	p.game.Start(numberOfPlayers, ws)
 
-	_, winnerMsg, _ := conn.ReadMessage()
+	winnerMsg := ws.WaitForMsg()
 	p.game.Finish(string(winnerMsg))
 }
 func (p *PlayerServer) leagueHandler(w http.ResponseWriter, r *http.Request) {

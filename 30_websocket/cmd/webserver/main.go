@@ -4,7 +4,7 @@ import (
 	"log"
 	"net/http"
 
-	poker "github.com/riyoth/learn-go-with-tests-exercises/28_command_line"
+	poker "github.com/riyoth/learn-go-with-tests-exercises/30_websocket"
 )
 
 const dbFileName = "game.db.json"

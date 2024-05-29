@@ -8,7 +8,7 @@ import (
 	"testing"
 	"time"
 
-	poker "github.com/riyoth/learn-go-with-tests-exercises/28_command_line"
+	poker "github.com/riyoth/learn-go-with-tests-exercises/30_websocket"
 )
 
 func TestGame_Start(t *testing.T) {
